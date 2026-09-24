@@ -28,7 +28,9 @@ let deal = async (ctx) => {
 				tgme_widget_message_texts.push('');
 			},
 		})
-		.on('.tgme_widget_message_bubble > .tgme_widget_message_text', {
+		// 2026-09: t.me 改版后 .tgme_widget_message_text 被包进 .media_supported_cont，
+		// 不再是 .tgme_widget_message_bubble 的直接子元素，必须用后代选择器
+		.on('.tgme_widget_message_bubble .tgme_widget_message_text', {
 			text(text) {
 				tgme_widget_message_texts[tgme_widget_message_texts.length - 1] += text.text;
 			},
@@ -41,7 +43,7 @@ let deal = async (ctx) => {
 				tgme_widget_message_texts[tgme_widget_message_texts.length - 1] += '<br>';
 			},
 		})
-		.on('.tgme_widget_message_bubble > .tgme_widget_message_text > b', {
+		.on('.tgme_widget_message_bubble .tgme_widget_message_text > b', {
 			element(element) {
 				// add <b> tag
 				tgme_widget_message_texts[tgme_widget_message_texts.length - 1] += '<b>';
@@ -52,7 +54,7 @@ let deal = async (ctx) => {
 				}
 			},
 		})
-		.on('.tgme_widget_message_bubble > .tgme_widget_message_text > br', {
+		.on('.tgme_widget_message_bubble .tgme_widget_message_text > br', {
 			element(element) {
 				// add <br> tag
 				tgme_widget_message_texts[tgme_widget_message_texts.length - 1] += '<br>';
